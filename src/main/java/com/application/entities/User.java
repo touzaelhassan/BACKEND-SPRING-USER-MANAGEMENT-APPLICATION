@@ -1,11 +1,8 @@
 package com.application.entities;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 

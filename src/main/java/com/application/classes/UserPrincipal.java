@@ -13,7 +13,11 @@ public class UserPrincipal implements UserDetails {
     public UserPrincipal(User user) { this.user = user; }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() { return null; }
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        return null;
+
+    }
     @Override
     public String getPassword() { return this.user.getPassword(); }
     @Override
