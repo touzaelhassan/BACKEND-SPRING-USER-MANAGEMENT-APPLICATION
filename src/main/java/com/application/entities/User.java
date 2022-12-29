@@ -1,8 +1,11 @@
 package com.application.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -24,14 +27,14 @@ public class User implements Serializable {
     private Date lastLoginDateDisplay;
     private Date joinDate;
     private boolean isActive;
-    private boolean isLocked;
+    private boolean isNotLocked;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
 
     public User() { }
 
-    public User(String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isLocked, List<Role> roles) {
+    public User(String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isNotLocked, List<Role> roles) {
 
         this.userId = userId;
         this.firstname = firstname;
@@ -44,12 +47,12 @@ public class User implements Serializable {
         this.lastLoginDateDisplay = lastLoginDateDisplay;
         this.joinDate = joinDate;
         this.isActive = isActive;
-        this.isLocked = isLocked;
+        this.isNotLocked = isNotLocked;
         this.roles = roles;
 
     }
 
-    public User(Long id, String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isLocked, List<Role> roles) {
+    public User(Long id, String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isNotLocked, List<Role> roles) {
 
         this.id = id;
         this.userId = userId;
@@ -63,7 +66,7 @@ public class User implements Serializable {
         this.lastLoginDateDisplay = lastLoginDateDisplay;
         this.joinDate = joinDate;
         this.isActive = isActive;
-        this.isLocked = isLocked;
+        this.isNotLocked = isNotLocked;
         this.roles = roles;
 
     }
@@ -80,7 +83,7 @@ public class User implements Serializable {
     public void setLastLoginDateDisplay(Date lastLoginDateDisplay) { this.lastLoginDateDisplay = lastLoginDateDisplay; }
     public void setJoinDate(Date joinDate) { this.joinDate = joinDate; }
     public void setActive(boolean active) { isActive = active; }
-    public void setLocked(boolean locked) { isLocked = locked; }
+    public void setNotLocked(boolean notLocked) { isNotLocked = notLocked; }
     public void setRoles(List<Role> roles) { this.roles = roles; }
 
     public Long getId() { return id; }
@@ -95,7 +98,8 @@ public class User implements Serializable {
     public Date getLastLoginDateDisplay() { return lastLoginDateDisplay; }
     public Date getJoinDate() { return joinDate; }
     public boolean isActive() { return isActive; }
-    public boolean isLocked() { return isLocked; }
+    public boolean isNotLocked() { return isNotLocked; }
     public List<Role> getRoles() { return roles; }
+
 
 }

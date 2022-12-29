@@ -1,4 +1,4 @@
-package com.application.entities;
+package com.application.classes;
 
 import org.springframework.http.HttpStatus;
 
