@@ -1,4 +1,4 @@
-package com.application.utils;
+package com.application.security;
 
 import com.application.classes.UserPrincipal;
 import com.auth0.jwt.JWT;
@@ -24,7 +24,7 @@ import static com.application.constants.SecurityConstant.*;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static java.util.Arrays.stream;
 
-@Component
+@Component("jwtTokenProviderBean")
 public class JWTTokenProvider {
 
     @Value("${jwt.secret}")
