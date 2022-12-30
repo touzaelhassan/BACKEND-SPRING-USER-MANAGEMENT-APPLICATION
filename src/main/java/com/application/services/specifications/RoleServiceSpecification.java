@@ -9,5 +9,6 @@ public interface RoleServiceSpecification {
     Role addRole(Role role);
     Role getRoleByName(String name);
     List<Role> getRoles();
+    void addAuthorityToRole(String roleName, String authorityName);
 
 }

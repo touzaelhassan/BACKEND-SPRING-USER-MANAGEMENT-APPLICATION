@@ -5,4 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository("roleRepositoryBean")
-public interface RoleRepository extends JpaRepository<Role, Long> {  Role finByName(String name);}
+public interface RoleRepository extends JpaRepository<Role, Long> {  Role findByName(String name);}

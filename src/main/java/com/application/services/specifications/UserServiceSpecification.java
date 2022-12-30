@@ -7,7 +7,8 @@ import java.util.List;
 public interface UserServiceSpecification {
 
     User addUser(User user);
-    User getUserByName(String name);
+    User getUserByUsername(String username);
     List<User> getUsers();
+    void addRoleToUser(String username, String roleName);
 
 }
