@@ -1,4 +1,4 @@
-package com.application.security;
+package com.application.security.jwt;
 
 import com.application.classes.UserPrincipal;
 import com.auth0.jwt.JWT;
