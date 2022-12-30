@@ -1,10 +1,15 @@
 package com.application.classes;
 
+import com.application.entities.Authority;
 import com.application.entities.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
 
@@ -15,9 +20,12 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return null;
+        List<Authority> authorities = new ArrayList<>();
+        this.user.getRoles().stream().forEach( role -> authorities.addAll(role.getAuthorities()));
+        return authorities.stream().map( authority -> authority.getName()).map( authorityName ->new SimpleGrantedAuthority(authorityName)).collect(Collectors.toList());
 
     }
+
     @Override
     public String getPassword() { return this.user.getPassword(); }
     @Override

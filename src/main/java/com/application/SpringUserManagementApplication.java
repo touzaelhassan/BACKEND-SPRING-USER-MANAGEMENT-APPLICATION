@@ -10,9 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
 import java.util.Date;
-import java.util.List;
 
 @SpringBootApplication
 public class SpringUserManagementApplication {
@@ -66,8 +64,6 @@ public class SpringUserManagementApplication {
             userServiceBean.addRoleToUser(user1.getUsername(), role3.getName());
             userServiceBean.addRoleToUser(user2.getUsername(), role3.getName());
             userServiceBean.addRoleToUser(user3.getUsername(), role3.getName());
-
-            userServiceBean.getUserByUsername("admin").getRoles().forEach(role -> role.getAuthorities().forEach(authority -> System.out.println(authority.getName())));
 
         };
 
