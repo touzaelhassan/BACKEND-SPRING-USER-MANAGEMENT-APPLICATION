@@ -2,9 +2,7 @@ package com.application.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +24,7 @@ public class User implements Serializable {
     private boolean isActive;
     private boolean isNotLocked;
     private String role;
+    private String[] authorities;
 
 
     public User() { }
@@ -92,6 +91,7 @@ public class User implements Serializable {
     public void setActive(boolean active) { isActive = active; }
     public void setNotLocked(boolean notLocked) { isNotLocked = notLocked; }
     public void setRole(String role) { this.role = role; }
+    public void setAuthorities(String[] authorities) { this.authorities = authorities; }
 
     public Long getId() { return id; }
     public String getUserId() { return userId; }
@@ -107,5 +107,6 @@ public class User implements Serializable {
     public boolean isActive() { return isActive; }
     public boolean isNotLocked() { return isNotLocked; }
     public String getRole() { return role; }
+    public String[] getAuthorities() { return authorities; }
 
 }
