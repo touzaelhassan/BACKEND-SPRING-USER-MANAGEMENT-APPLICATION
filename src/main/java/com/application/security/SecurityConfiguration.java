@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private JWTAuthenticationFilter jwtAuthenticationFilter;
     private JWTAuthorizationFilter  jwtAuthorizationFilter;
     private JWTAccessDeniedHandler jwtAccessDeniedHandler;
-    private UserDetailsService userDetailsService;
+    private UserDetailsService userServiceBean;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -37,19 +37,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             JWTAuthenticationFilter jwtAuthenticationFilter,
             JWTAuthorizationFilter jwtAuthorizationFilter,
             JWTAccessDeniedHandler jwtAccessDeniedHandler,
-            @Qualifier("userDetailsService") UserDetailsService userDetailsService,
+             UserDetailsService userServiceBean,
             BCryptPasswordEncoder bCryptPasswordEncoder
     ) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-        this.userDetailsService = userDetailsService;
+        this.userServiceBean = userServiceBean;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        auth.userDetailsService(userServiceBean).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override

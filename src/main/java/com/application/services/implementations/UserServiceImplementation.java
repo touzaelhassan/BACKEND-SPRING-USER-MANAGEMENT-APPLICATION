@@ -28,9 +28,8 @@ import java.util.List;
 import static com.application.constants.UserServiceImplementationConstants.*;
 import static com.application.enums.Role.ROLE_USER;
 
-@Service()
+@Service("userServiceBean")
 @Transactional
-@Qualifier("userDetailsService")
 public class UserServiceImplementation implements UserServiceSpecification, UserDetailsService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());

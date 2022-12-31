@@ -16,14 +16,14 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping(path = {"/", "/api"})
 public class UserController extends ExceptionHandlingController {
 
-    private UserServiceSpecification userDetailsService;
+    private UserServiceSpecification userServiceBean;
 
     @Autowired
-    public UserController(UserServiceSpecification userDetailsService) { this.userDetailsService = userDetailsService; }
+    public UserController(UserServiceSpecification userServiceBean) { this.userServiceBean = userServiceBean; }
 
     @PostMapping("/register")
     public ResponseEntity<User > register(@RequestBody User user) throws UserNotFoundException, EmailExistException, UsernameExistException {
-      User registeredUser =   userDetailsService.register(user.getFirstname(), user.getLastname(), user.getUsername(), user.getEmail());
+      User registeredUser =   userServiceBean.register(user.getFirstname(), user.getLastname(), user.getUsername(), user.getEmail());
       return  new ResponseEntity<>(registeredUser, OK);
     }
 
