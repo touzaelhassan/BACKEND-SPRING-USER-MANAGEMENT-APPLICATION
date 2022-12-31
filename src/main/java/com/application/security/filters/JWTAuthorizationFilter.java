@@ -36,7 +36,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
             String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-            if(authorizationHeader == null || authorizationHeader.startsWith(TOKEN_PREFIX)){
+            if(authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_PREFIX)){
                 filterChain.doFilter(request, response);
                 return;
             }
