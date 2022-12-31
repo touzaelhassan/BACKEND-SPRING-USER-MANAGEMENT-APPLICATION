@@ -1,6 +1,6 @@
 package com.application.enums;
 
-import static com.application.constants.Authority.*;
+import static com.application.constants.AuthorityConstants.*;
 
 public enum Role {
 

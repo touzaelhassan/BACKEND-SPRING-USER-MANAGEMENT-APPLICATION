@@ -1,6 +1,6 @@
 package com.application.constants;
 
-public class Authority {
+public class AuthorityConstants {
     public static final String[] USER_AUTHORITIES = { "user:read" };
     public static final String[] HR_AUTHORITIES = { "user:read", "user:update" };
     public static final String[] MANAGER_AUTHORITIES = { "user:read", "user:update" };

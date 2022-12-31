@@ -25,6 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.Date;
 import java.util.List;
 
+import static com.application.constants.UserServiceImplementationConstants.*;
 import static com.application.enums.Role.ROLE_USER;
 
 @Service()
@@ -44,24 +45,25 @@ public class UserServiceImplementation implements UserServiceSpecification, User
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user = userRepositoryBean.findUserByUsername(username);
-
         if(user == null){
-            throw new UsernameNotFoundException("User not found !!.");
+            LOGGER.error(NO_USER_FOUND_BY_USERNAME + username);
+            throw new UsernameNotFoundException(NO_USER_FOUND_BY_USERNAME + username);
         }else{
             user.setLastLoginDateDisplay(user.getLastLoginDate());
             user.setLastLoginDate(new Date());
             userRepositoryBean.save(user);
             UserPrincipal userPrincipal = new UserPrincipal(user);
+            LOGGER.info(FOUND_USER_BY_USERNAME + username);
             return userPrincipal;
         }
-
     }
 
     @Override
     public User register(String firstName, String lastName, String username, String email) throws UserNotFoundException, EmailExistException, UsernameExistException {
+
         validateNewUsernameAndEmail(StringUtils.EMPTY, username, email);
+
         User user = new User();
         user.setUserId(generateUserId());
         String password = generatePassword();
@@ -83,55 +85,48 @@ public class UserServiceImplementation implements UserServiceSpecification, User
         LOGGER.info("New user password : " + password);
 
         return user;
+
     }
 
     @Override
-    public User findUserByUsername(String username) {
-        return null;
-    }
-
+    public User findUserByUsername(String username) { return userRepositoryBean.findUserByUsername(username);}
     @Override
     public User findUserByEmail(String email) {
-        return null;
+        return userRepositoryBean.findUserByEmail(email);
     }
-
     @Override
     public List<User> getUsers() {
-        return null;
+        return userRepositoryBean.findAll();
     }
 
     private User validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail) throws UserNotFoundException, UsernameExistException, EmailExistException {
 
+        User userByNewUsername = findUserByUsername(newUsername);
+        User userByNewEmail = findUserByEmail(newEmail);
+
         if(StringUtils.isNotBlank(currentUsername)){
 
             User currentUser = findUserByUsername(currentUsername);
-            if(currentUser == null){ throw new UserNotFoundException("No user found by current username : " + currentUsername); }
+            if(currentUser == null){ throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME + currentUsername); }
 
-            User newUserByNewUsername = findUserByUsername(newUsername);
-            if(newUserByNewUsername != null && !currentUser.getId().equals(newUserByNewUsername.getId())){ throw new UsernameExistException("Username has already taken !!."); }
-
-            User newUserByNewEmail = findUserByEmail(newEmail);
-            if(newUserByNewEmail != null && !currentUser.getId().equals(newUserByNewEmail.getId())){ throw new EmailExistException("Email has already taken !!."); }
+            if(userByNewUsername != null && !currentUser.getId().equals(userByNewUsername.getId())){ throw new UsernameExistException(USERNAME_ALREADY_EXISTS); }
+            if(userByNewEmail != null && !currentUser.getId().equals(userByNewEmail.getId())){ throw new EmailExistException(EMAIL_ALREADY_EXISTS); }
 
             return currentUser;
 
         }else{
 
-            User newUserByNewUsername = findUserByUsername(newUsername);
-            if(newUserByNewUsername != null ){ throw new UsernameExistException("Username has already taken !!."); }
-
-            User newUserByNewEmail = findUserByEmail(newEmail);
-            if(newUserByNewEmail != null ){ throw new EmailExistException("Email has already taken !!."); }
+            if(userByNewUsername != null ){ throw new UsernameExistException(USERNAME_ALREADY_EXISTS); }
+            if(userByNewEmail != null ){ throw new EmailExistException(EMAIL_ALREADY_EXISTS); }
 
             return null;
 
         }
-
     }
 
     private String generateUserId() { return RandomStringUtils.randomNumeric(10); }
     private String generatePassword() { return RandomStringUtils.randomAlphanumeric(10); }
     private String encodePassword(String password){ return bCryptPasswordEncoder.encode(password); }
-    private String getTemporaryProfileImageUrl() { return ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/image/profile/temp").toUriString()   ;}
+    private String getTemporaryProfileImageUrl() { return ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_USER_IMAGE_PATH).toUriString()   ;}
 
 }
