@@ -8,6 +8,7 @@ import com.application.repositories.UserRepository;
 import com.application.services.specifications.UserServiceSpecification;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,8 +17,9 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
-@Service("userServiceBean")
+@Service()
 @Transactional
+@Qualifier("userDetailsService")
 public class UserServiceImplementation implements UserServiceSpecification, UserDetailsService {
 
     private UserRepository userRepositoryBean;
