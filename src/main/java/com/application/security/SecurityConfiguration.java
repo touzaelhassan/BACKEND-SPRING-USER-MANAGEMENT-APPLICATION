@@ -4,7 +4,6 @@ import com.application.security.filters.JWTAccessDeniedHandler;
 import com.application.security.filters.JWTAuthenticationFilter;
 import com.application.security.filters.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,11 +25,11 @@ import static com.application.constants.SecurityConstants.PUBLIC_URLS;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private JWTAuthenticationFilter jwtAuthenticationFilter;
-    private JWTAuthorizationFilter  jwtAuthorizationFilter;
-    private JWTAccessDeniedHandler jwtAccessDeniedHandler;
-    private UserDetailsService userServiceBean;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JWTAuthenticationFilter jwtAuthenticationFilter;
+    private final JWTAuthorizationFilter  jwtAuthorizationFilter;
+    private final JWTAccessDeniedHandler jwtAccessDeniedHandler;
+    private final UserDetailsService userServiceBean;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public SecurityConfiguration(

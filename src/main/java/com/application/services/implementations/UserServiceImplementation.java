@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,8 +32,8 @@ import static com.application.enums.Role.ROLE_USER;
 public class UserServiceImplementation implements UserServiceSpecification, UserDetailsService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-    private UserRepository userRepositoryBean;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepositoryBean;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserServiceImplementation(UserRepository userRepositoryBean, BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -81,7 +80,7 @@ public class UserServiceImplementation implements UserServiceSpecification, User
         user.setProfileImageUrl(getTemporaryProfileImageUrl());
         userRepositoryBean.save(user);
 
-        LOGGER.info("New user password : " + password);
+        LOGGER.info("The user password : " + password);
 
         return user;
 
