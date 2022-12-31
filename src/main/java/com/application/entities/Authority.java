@@ -1,6 +1,6 @@
 package com.application.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "authorities")

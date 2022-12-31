@@ -6,7 +6,7 @@ import com.application.entities.User;
 import com.application.repositories.RoleRepository;
 import com.application.repositories.UserRepository;
 import com.application.services.specifications.UserServiceSpecification;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,24 +31,20 @@ public class UserServiceImplementation implements UserServiceSpecification, User
 
     @Override
     public User addUser(User user) { return this.userRepositoryBean.save(user); }
-
     @Override
-    public User getUserByUsername(String username) { return this.userRepositoryBean.findByUsername(username); }
-
+    public User getUserByUsername(String username) { return this.userRepositoryBean.findUserByUsername(username); }
     @Override
     public List<User> getUsers() { return this.userRepositoryBean.findAll(); }
-
     @Override
     public void addRoleToUser(String username, String roleName) {
-        User user = userRepositoryBean.findByUsername(username);
-        Role role = roleRepositoryBean.findByName(roleName);
+        User user = userRepositoryBean.findUserByUsername(username);
+        Role role = roleRepositoryBean.findRoleByName(roleName);
         user.getRoles().add(role);
     }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepositoryBean.findByUsername(username);
+        User user = userRepositoryBean.findUserByUsername(username);
 
         if(user == null){
             throw new UsernameNotFoundException("User not found !!.");
