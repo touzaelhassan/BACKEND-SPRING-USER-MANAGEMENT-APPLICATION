@@ -25,9 +25,7 @@ public class User implements Serializable {
     private Date joinDate;
     private boolean isActive;
     private boolean isNotLocked;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles = new ArrayList<>();
+    private String role;
 
 
     public User() { }
@@ -47,8 +45,7 @@ public class User implements Serializable {
         this.isNotLocked = isNotLocked;
     }
 
-    public User(String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isNotLocked, List<Role> roles) {
-
+    public User(String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isNotLocked, String role) {
         this.userId = userId;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -61,12 +58,10 @@ public class User implements Serializable {
         this.joinDate = joinDate;
         this.isActive = isActive;
         this.isNotLocked = isNotLocked;
-        this.roles = roles;
-
+        this.role = role;
     }
 
-    public User(Long id, String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isNotLocked, List<Role> roles) {
-
+    public User(Long id, String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isNotLocked, String role) {
         this.id = id;
         this.userId = userId;
         this.firstname = firstname;
@@ -80,8 +75,7 @@ public class User implements Serializable {
         this.joinDate = joinDate;
         this.isActive = isActive;
         this.isNotLocked = isNotLocked;
-        this.roles = roles;
-
+        this.role = role;
     }
 
     public void setId(Long id) { this.id = id; }
@@ -97,7 +91,7 @@ public class User implements Serializable {
     public void setJoinDate(Date joinDate) { this.joinDate = joinDate; }
     public void setActive(boolean active) { isActive = active; }
     public void setNotLocked(boolean notLocked) { isNotLocked = notLocked; }
-    public void setRoles(List<Role> roles) { this.roles = roles; }
+    public void setRole(String role) { this.role = role; }
 
     public Long getId() { return id; }
     public String getUserId() { return userId; }
@@ -112,7 +106,6 @@ public class User implements Serializable {
     public Date getJoinDate() { return joinDate; }
     public boolean isActive() { return isActive; }
     public boolean isNotLocked() { return isNotLocked; }
-    public List<Role> getRoles() { return roles; }
-
+    public String getRole() { return role; }
 
 }
