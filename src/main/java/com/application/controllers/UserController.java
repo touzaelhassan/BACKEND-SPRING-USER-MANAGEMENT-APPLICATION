@@ -1,14 +1,13 @@
 package com.application.controllers;
 
 import com.application.exceptions.ExceptionHandlingController;
-import com.application.exceptions.classes.EmailExistException;
 import com.application.exceptions.classes.UserNotFoundException;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(path = {"/", "/api"})
 public class UserController extends ExceptionHandlingController {
 
     @GetMapping("/users")

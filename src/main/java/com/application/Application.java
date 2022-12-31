@@ -15,11 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Date;
 
 @SpringBootApplication
-public class SpringUserManagementApplication {
+public class Application {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringUserManagementApplication.class, args);
-    }
+    public static void main(String[] args) { SpringApplication.run(Application.class, args); }
 
     @Bean
     BCryptPasswordEncoder bCryptPasswordEncoder(){return new BCryptPasswordEncoder(); }
