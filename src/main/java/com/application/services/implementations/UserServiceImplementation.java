@@ -83,9 +83,7 @@ public class UserServiceImplementation implements UserServiceSpecification, User
         user.setAuthorities(ROLE_USER.getAuthorities());
         user.setProfileImageUrl(getTemporaryProfileImageUrl());
         userRepositoryBean.save(user);
-
         LOGGER.info("The user password : " + password);
-
         return user;
 
     }
