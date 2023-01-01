@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Date;
@@ -62,7 +63,7 @@ public class UserServiceImplementation implements UserServiceSpecification, User
     }
 
     @Override
-    public User register(String firstName, String lastName, String username, String email) throws UserNotFoundException, EmailExistException, UsernameExistException {
+    public User register(String firstname, String lastname, String username, String email) throws UserNotFoundException, EmailExistException, UsernameExistException {
 
         validateNewUsernameAndEmail(StringUtils.EMPTY, username, email);
 
@@ -71,8 +72,8 @@ public class UserServiceImplementation implements UserServiceSpecification, User
         String password = generatePassword();
         String encodedPassword = encodePassword(password);
 
-        user.setFirstname(firstName);
-        user.setLastname(lastName);
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
         user.setUsername(username);
         user.setEmail(email);
         user.setJoinDate(new Date());
@@ -89,6 +90,26 @@ public class UserServiceImplementation implements UserServiceSpecification, User
     }
 
     @Override
+    public User addUser(String firstname, String lastname, String username, String email, String role, boolean isNotLocked, boolean isActive, MultipartFile profileImage) {
+        return null;
+    }
+
+    @Override
+    public User updateUser(String currentUsername, String newFirstname, String newLastname, String newUsername, String newEmail, String role, boolean isNotLocked, boolean isActive, MultipartFile profileImage) {
+        return null;
+    }
+
+    @Override
+    public User updateProfileImage(String username, MultipartFile newProfileImage) {
+        return null;
+    }
+
+    @Override
+    public void resetPassword(String email) {
+
+    }
+
+    @Override
     public User findUserByUsername(String username) { return userRepositoryBean.findUserByUsername(username);}
     @Override
     public User findUserByEmail(String email) {
@@ -97,6 +118,11 @@ public class UserServiceImplementation implements UserServiceSpecification, User
     @Override
     public List<User> getUsers() {
         return userRepositoryBean.findAll();
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+
     }
 
     private User validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail) throws UserNotFoundException, UsernameExistException, EmailExistException {
