@@ -22,9 +22,9 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping(path = {"/", "/api"})
 public class UserController extends ExceptionHandlingController {
 
-    private UserServiceSpecification userServiceBean;
-    private AuthenticationManager authenticationManager;
-    private JWTTokenProvider jwtTokenProvider;
+    private final UserServiceSpecification userServiceBean;
+    private final AuthenticationManager authenticationManager;
+    private final JWTTokenProvider jwtTokenProvider;
 
     @Autowired
     public UserController(UserServiceSpecification userServiceBean, AuthenticationManager authenticationManager, JWTTokenProvider jwtTokenProvider) {

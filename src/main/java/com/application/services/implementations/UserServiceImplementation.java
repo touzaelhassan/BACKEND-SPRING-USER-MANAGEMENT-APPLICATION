@@ -6,6 +6,7 @@ import com.application.exceptions.classes.EmailExistException;
 import com.application.exceptions.classes.UserNotFoundException;
 import com.application.exceptions.classes.UsernameExistException;
 import com.application.repositories.UserRepository;
+import com.application.services.LoginAttemptService;
 import com.application.services.specifications.UserServiceSpecification;
 import javax.transaction.Transactional;
 
@@ -34,11 +35,13 @@ public class UserServiceImplementation implements UserServiceSpecification, User
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepositoryBean;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final LoginAttemptService loginAttemptServiceBean;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepositoryBean, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImplementation(UserRepository userRepositoryBean, BCryptPasswordEncoder bCryptPasswordEncoder, LoginAttemptService loginAttemptServiceBean) {
         this.userRepositoryBean = userRepositoryBean;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.loginAttemptServiceBean = loginAttemptServiceBean;
     }
 
     @Override
@@ -48,6 +51,7 @@ public class UserServiceImplementation implements UserServiceSpecification, User
             LOGGER.error(NO_USER_FOUND_BY_USERNAME + username);
             throw new UsernameNotFoundException(NO_USER_FOUND_BY_USERNAME + username);
         }else{
+            validateLoginAttempt(user);
             user.setLastLoginDateDisplay(user.getLastLoginDate());
             user.setLastLoginDate(new Date());
             userRepositoryBean.save(user);
@@ -127,4 +131,15 @@ public class UserServiceImplementation implements UserServiceSpecification, User
     private String encodePassword(String password){ return bCryptPasswordEncoder.encode(password); }
     private String getTemporaryProfileImageUrl() { return ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_USER_IMAGE_PATH).toUriString()   ;}
 
+    private void validateLoginAttempt(User user) {
+        if(user.isNotLocked()){
+           if(loginAttemptServiceBean.hasExceededMaxAttempts(user.getUsername())){
+               user.setNotLocked(false);
+           }else{
+               user.setNotLocked(true);
+           }
+        }else{
+            loginAttemptServiceBean.evictUserFromLoginAttemptCache(user.getUsername());
+        }
+    }
 }
