@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +33,7 @@ import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @RestController
 @RequestMapping(path = {"/", "/api"})
+//@RequestMapping("/api")
 public class UserController extends ExceptionHandlingController {
 
     public static final String EMAIL_SENT = "An email with a new password was sent to : ";
@@ -48,6 +48,9 @@ public class UserController extends ExceptionHandlingController {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
+
+    @GetMapping("/test")
+    public String test(){ return "Hello From Test Endpoint"; }
 
     @PostMapping("/register")
     public ResponseEntity<User > register(@RequestBody User user) throws UserNotFoundException, EmailExistException, UsernameExistException, MessagingException {

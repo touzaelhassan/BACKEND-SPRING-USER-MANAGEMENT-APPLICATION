@@ -9,11 +9,10 @@ public class SecurityConstants {
     public static final String GET_ARRAYS_LLC = "Get Arrays, LLC";
     public static final String GET_ARRAYS_ADMINISTRATION = "User Management Portal";
     public static final String AUTHORITIES = "authorities";
-    public static final String FORBIDDEN_MESSAGE = "You need to login to access this page";
-    public static final String ACCESS_DENIED_MESSAGE = "You do not have permission to access this page";
+    public static final String FORBIDDEN_MESSAGE = "You need to login to access this endpoint";
+    public static final String ACCESS_DENIED_MESSAGE = "You do not have permission to access this endpoint";
     public static final String OPTIONS_HTTP_METHOD = "OPTIONS";
-    //public static final String[] PUBLIC_URLS = { "/api/login", "/api/register", "/api/reset-password/**", "/api/image/**" };
-    public static final String[] PUBLIC_URLS = { "**" };
-
+    public static final String[] PUBLIC_URLS = { "/api/login", "/api/register" };
+    // public static final String[] PUBLIC_URLS = { "**" };
 
 }
