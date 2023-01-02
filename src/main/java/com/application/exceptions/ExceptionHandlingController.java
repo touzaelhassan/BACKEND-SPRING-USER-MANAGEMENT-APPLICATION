@@ -35,7 +35,7 @@ public class ExceptionHandlingController implements ErrorController {
     private static final String INCORRECT_CREDENTIALS = "Username / password incorrect. Please try again";
     private static final String ACCOUNT_DISABLED = "Your account has been disabled. If this is an error, please contact administration";
     private static final String ERROR_PROCESSING_FILE = "Error occurred while processing file";
-    private static final String NOT_ENOUGH_PERMISSION = "You do not have enough permission";
+    private static final String NOT_ENOUGH_PERMISSION = "You do not have permission to access this endpoint";
     public static final String ERROR_PATH = "/error";
 
     private ResponseEntity<HttpResponse> createHttpResponse(HttpStatus httpStatus, String message) {

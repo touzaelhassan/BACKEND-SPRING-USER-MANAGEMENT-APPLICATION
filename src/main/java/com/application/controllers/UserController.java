@@ -33,7 +33,6 @@ import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @RestController
 @RequestMapping(path = {"/", "/api"})
-//@RequestMapping("/api")
 public class UserController extends ExceptionHandlingController {
 
     public static final String EMAIL_SENT = "An email with a new password was sent to : ";
@@ -48,9 +47,6 @@ public class UserController extends ExceptionHandlingController {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
-
-    @GetMapping("/test")
-    public String test(){ return "Hello From Test Endpoint"; }
 
     @PostMapping("/register")
     public ResponseEntity<User > register(@RequestBody User user) throws UserNotFoundException, EmailExistException, UsernameExistException, MessagingException {
@@ -123,8 +119,11 @@ public class UserController extends ExceptionHandlingController {
         return response(OK, USER_DELETED_SUCCESSFULLY);
     }
 
-    @PostMapping("/user/update-profile-image")
-    public ResponseEntity<User> updateProfileImage( @RequestParam("username") String username, @RequestParam(value = "profileImage") MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException {
+    @PostMapping("/user/update/profile-image")
+    public ResponseEntity<User> updateProfileImage(
+            @RequestParam("username") String username,
+            @RequestParam(value = "user-profile-image") MultipartFile profileImage
+    ) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException {
         User user = userServiceBean.updateProfileImage(username, profileImage);
         return new ResponseEntity<>(user, OK);
     }

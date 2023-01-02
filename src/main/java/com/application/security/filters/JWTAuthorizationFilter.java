@@ -44,10 +44,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             String token = authorizationHeader.substring(TOKEN_PREFIX.length());
             String username = jwtTokenProviderBean.getSubject(token);
 
-            boolean a = jwtTokenProviderBean.isTokenValid(username, token);
-
-            String g = "hh";
-
             if(jwtTokenProviderBean.isTokenValid(username, token)){
                 List<GrantedAuthority> authorities = jwtTokenProviderBean.getAuthorities(token);
                 Authentication authentication = jwtTokenProviderBean.getAuthentication(username, authorities, request);

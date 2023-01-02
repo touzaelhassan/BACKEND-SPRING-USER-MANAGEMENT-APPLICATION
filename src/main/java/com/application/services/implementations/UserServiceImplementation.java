@@ -33,6 +33,7 @@ import static com.application.constants.UserServiceImplementationConstants.*;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static com.application.enums.Role.ROLE_USER;
+import static org.springframework.http.MediaType.*;
 
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -223,6 +224,7 @@ public class UserServiceImplementation implements UserServiceSpecification, User
                 throw new NotAnImageFileException(profileImage.getOriginalFilename() + NOT_AN_IMAGE_FILE);
             }
              */
+
             Path userFolder = Paths.get(USER_FOLDER + user.getUsername()).toAbsolutePath().normalize();
             if(!Files.exists(userFolder)) {
                 Files.createDirectories(userFolder);
