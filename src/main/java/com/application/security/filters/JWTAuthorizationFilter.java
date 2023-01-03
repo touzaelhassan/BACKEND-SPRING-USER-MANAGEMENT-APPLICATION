@@ -29,17 +29,12 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
         if(request.getMethod().equalsIgnoreCase(OPTIONS_HTTP_METHOD)){
+
             response.setStatus(OK.value());
-        }else{
 
-            String authorizationHeader = request.getHeader(AUTHORIZATION);
-
-            if(authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_PREFIX)){
-                filterChain.doFilter(request, response);
-                return;
-            }
+        }else if(authorizationHeader!=null && authorizationHeader.startsWith(TOKEN_PREFIX)){
 
             String token = authorizationHeader.substring(TOKEN_PREFIX.length());
             String username = jwtTokenProviderBean.getSubject(token);
