@@ -10,6 +10,7 @@
         <version>2.7.5</version>
         <relativePath/>
     </parent>
+
     <groupId>com.application</groupId>
     <artifactId>SPRING-USER-MANAGEMENT-APPLICATION</artifactId>
     <version>0.0.1-SNAPSHOT</version>
