@@ -2,22 +2,23 @@ package com.application.controllers;
 
 import com.application.classes.HttpResponse;
 import com.application.classes.UserPrincipal;
+import com.application.dtos.LoginRequest;
+import com.application.dtos.RegisterRequest;
 import com.application.entities.User;
 import com.application.exceptions.ExceptionHandlingController;
 import com.application.exceptions.classes.*;
 import com.application.security.jwt.JWTTokenProvider;
 import com.application.services.specifications.UserServiceSpecification;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
-import javax.mail.MessagingException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,7 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @RestController
-@RequestMapping(path = {"/", "/api"})
+@RequestMapping("/api")
 public class UserController extends ExceptionHandlingController {
 
     public static final String EMAIL_SENT = "An email with a new password was sent to : ";
@@ -49,15 +50,21 @@ public class UserController extends ExceptionHandlingController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User > register(@RequestBody User user) throws UserNotFoundException, EmailExistException, UsernameExistException, MessagingException {
-      User registeredUser =   userServiceBean.register(user.getFirstname(), user.getLastname(), user.getUsername(), user.getEmail());
-      return  new ResponseEntity<>(registeredUser, OK);
+    public ResponseEntity<User > register(@RequestBody RegisterRequest registerRequest) throws UserNotFoundException, EmailExistException, UsernameExistException {
+        String firstname = registerRequest.getFirstname();
+        String lastname = registerRequest.getLastname();
+        String username = registerRequest.getUsername();
+        String email = registerRequest.getEmail();
+        User registeredUser =   userServiceBean.register(firstname, lastname, username, email);
+        return  new ResponseEntity<>(registeredUser, OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User > login(@RequestBody User user) {
-        authentication(user.getUsername(), user.getPassword());
-        User loggedUser = userServiceBean.findUserByUsername(user.getUsername());
+    public ResponseEntity<User > login(@RequestBody LoginRequest loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+        authentication(username, password);
+        User loggedUser = userServiceBean.findUserByUsername(username);
         UserPrincipal userPrincipal = new UserPrincipal(loggedUser);
         HttpHeaders jwtHeader = getJwtHeader(userPrincipal);
         return  new ResponseEntity<>(loggedUser, jwtHeader, OK);
@@ -107,7 +114,7 @@ public class UserController extends ExceptionHandlingController {
     }
 
     @GetMapping("/user/reset-password/{email}")
-    public ResponseEntity<HttpResponse> resetPassword(@PathVariable("email") String email) throws MessagingException, EmailNotFoundException {
+    public ResponseEntity<HttpResponse> resetPassword(@PathVariable("email") String email) throws  EmailNotFoundException {
         userServiceBean.resetPassword(email);
         return response(OK, EMAIL_SENT + email);
     }
