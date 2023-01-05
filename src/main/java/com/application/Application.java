@@ -1,25 +1,20 @@
 package com.application;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
-import static com.application.constants.FileConstants.USER_FOLDER;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-        new File(USER_FOLDER).mkdirs();
-    }
+    public static void main(String[] args) { SpringApplication.run(Application.class, args); }
 
     @Bean
     BCryptPasswordEncoder bCryptPasswordEncoder(){
