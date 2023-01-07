@@ -86,7 +86,7 @@ public class UserController extends ExceptionHandlingController {
         return new ResponseEntity<>(newUser, OK);
     }
 
-    @PostMapping("/user/update")
+    @PutMapping("/user/update")
     public ResponseEntity<User> update(
             @RequestParam("currentUsername") String currentUsername,
             @RequestParam("firstname") String firstname,
@@ -109,6 +109,7 @@ public class UserController extends ExceptionHandlingController {
     }
 
     @GetMapping("/users")
+    @PreAuthorize("hasAnyAuthority('user:read')")
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userServiceBean.getUsers();
         return new ResponseEntity<>(users, OK);
@@ -134,7 +135,7 @@ public class UserController extends ExceptionHandlingController {
         return response(OK, USER_ROLE_UPDATED_SUCCESSFULLY);
     }
 
-    @PostMapping("/user/update/profile-image")
+    @PutMapping("/user/update/profile-image")
     public ResponseEntity<User> updateProfileImage(
             @RequestParam("username") String username,
             @RequestParam(value = "user-profile-image") MultipartFile profileImage
