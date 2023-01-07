@@ -38,6 +38,7 @@ public class UserController extends ExceptionHandlingController {
 
     public static final String EMAIL_SENT = "An email with a new password was sent to : ";
     public static final String USER_DELETED_SUCCESSFULLY = "User deleted successfully";
+    public static final String USER_ROLE_UPDATED_SUCCESSFULLY = "User role updated successfully !!.";
     private final UserServiceSpecification userServiceBean;
     private final AuthenticationManager authenticationManager;
     private final JWTTokenProvider jwtTokenProvider;
@@ -124,6 +125,13 @@ public class UserController extends ExceptionHandlingController {
     public ResponseEntity<HttpResponse> deleteUser(@PathVariable("username") String username) throws IOException {
         userServiceBean.deleteUser(username);
         return response(OK, USER_DELETED_SUCCESSFULLY);
+    }
+
+    @PutMapping("/user/update/user-role/{id}")
+    @PreAuthorize("hasAnyAuthority('user:update')")
+    public ResponseEntity<HttpResponse> updateUserRole(@PathVariable("id") Long id,   @RequestParam("role") String role) throws IOException {
+        userServiceBean.updateUserRole(id, role);
+        return response(OK, USER_ROLE_UPDATED_SUCCESSFULLY);
     }
 
     @PostMapping("/user/update/profile-image")

@@ -174,6 +174,14 @@ public class UserServiceImplementation implements UserServiceSpecification, User
         userRepositoryBean.deleteById(user.getId());
     }
 
+    @Override
+    public void updateUserRole(Long id, String role) {
+        User user = userRepositoryBean.findById(id).orElse(null);
+        user.setRole(getRoleEnumName(role).name());
+        user.setAuthorities(getRoleEnumName(role).getAuthorities());
+        userRepositoryBean.save(user);
+    }
+
     private User validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail) throws UserNotFoundException, UsernameExistException, EmailExistException {
 
         User userByNewUsername = findUserByUsername(newUsername);

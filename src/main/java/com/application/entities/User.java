@@ -26,7 +26,6 @@ public class User implements Serializable {
     private String role;
     private String[] authorities;
 
-
     public User() { }
 
     public User(String userId, String firstname, String lastname, String username, String email, String password, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, boolean isActive, boolean isNotLocked) {
