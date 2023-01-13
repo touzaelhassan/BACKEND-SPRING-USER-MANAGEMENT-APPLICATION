@@ -40,36 +40,10 @@ public class UserController extends ExceptionHandlingController {
     public static final String USER_DELETED_SUCCESSFULLY = "User deleted successfully";
     public static final String USER_ROLE_UPDATED_SUCCESSFULLY = "User role updated successfully !!.";
     private final UserServiceSpecification userServiceBean;
-    private final AuthenticationManager authenticationManager;
-    private final JWTTokenProvider jwtTokenProvider;
+
 
     @Autowired
-    public UserController(UserServiceSpecification userServiceBean, AuthenticationManager authenticationManager, JWTTokenProvider jwtTokenProvider) {
-        this.userServiceBean = userServiceBean;
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<User > register(@RequestBody RegisterRequest registerRequest) throws UserNotFoundException, EmailExistException, UsernameExistException {
-        String firstname = registerRequest.getFirstname();
-        String lastname = registerRequest.getLastname();
-        String username = registerRequest.getUsername();
-        String email = registerRequest.getEmail();
-        User registeredUser =   userServiceBean.register(firstname, lastname, username, email);
-        return  new ResponseEntity<>(registeredUser, OK);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<User > login(@RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
-        String password = loginRequest.getPassword();
-        authentication(username, password);
-        User loggedUser = userServiceBean.findUserByUsername(username);
-        UserPrincipal userPrincipal = new UserPrincipal(loggedUser);
-        HttpHeaders jwtHeader = getJwtHeader(userPrincipal);
-        return  new ResponseEntity<>(loggedUser, jwtHeader, OK);
-    }
+    public UserController(UserServiceSpecification userServiceBean) { this.userServiceBean = userServiceBean; }
 
     @PostMapping("/user/add")
     public ResponseEntity<User> addUser(
@@ -161,12 +135,6 @@ public class UserController extends ExceptionHandlingController {
         return byteArrayOutputStream.toByteArray();
     }
 
-    private void authentication(String username, String password) { authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password)); }
     private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) { return new ResponseEntity<>(new HttpResponse(httpStatus.value(), httpStatus, httpStatus.getReasonPhrase().toUpperCase(), message), httpStatus); }
-    private HttpHeaders getJwtHeader(UserPrincipal userPrincipal) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(JWT_TOKEN_HEADER, jwtTokenProvider.generateJWTToken(userPrincipal));
-        return headers;
-    }
 
 }
