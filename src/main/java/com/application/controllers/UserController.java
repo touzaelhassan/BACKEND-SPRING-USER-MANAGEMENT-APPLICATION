@@ -1,24 +1,19 @@
 package com.application.controllers;
 
 import com.application.classes.HttpResponse;
-import com.application.classes.UserPrincipal;
-import com.application.dtos.LoginRequest;
-import com.application.dtos.RegisterRequest;
 import com.application.entities.User;
 import com.application.exceptions.ExceptionHandlingController;
 import com.application.exceptions.classes.*;
-import com.application.security.jwt.JWTTokenProvider;
 import com.application.services.specifications.UserServiceSpecification;
-import org.springframework.http.HttpHeaders;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.awt.print.Pageable;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,9 +21,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-
 import static com.application.constants.FileConstants.*;
-import static com.application.constants.SecurityConstants.JWT_TOKEN_HEADER;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
@@ -36,11 +29,10 @@ import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 @RequestMapping("/api")
 public class UserController extends ExceptionHandlingController {
 
+    private final UserServiceSpecification userServiceBean;
     public static final String EMAIL_SENT = "An email with a new password was sent to : ";
     public static final String USER_DELETED_SUCCESSFULLY = "User deleted successfully";
     public static final String USER_ROLE_UPDATED_SUCCESSFULLY = "User role updated successfully !!.";
-    private final UserServiceSpecification userServiceBean;
-
 
     @Autowired
     public UserController(UserServiceSpecification userServiceBean) { this.userServiceBean = userServiceBean; }

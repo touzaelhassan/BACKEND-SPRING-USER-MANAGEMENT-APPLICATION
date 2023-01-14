@@ -11,9 +11,7 @@ public enum Role {
     ROLE_SUPER_ADMIN(SUPER_ADMIN_AUTHORITIES);
 
     private String[] authorities;
-
     Role(String... authorities){ this.authorities = authorities; }
-
     public String[] getAuthorities(){ return this.authorities; }
 
 }

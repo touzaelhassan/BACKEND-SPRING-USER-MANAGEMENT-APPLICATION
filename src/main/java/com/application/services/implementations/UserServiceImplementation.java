@@ -101,6 +101,7 @@ public class UserServiceImplementation implements UserServiceSpecification, User
 
     @Override
     public User addUser(String firstname, String lastname, String username, String email, String role, boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
+
         validateNewUsernameAndEmail(EMPTY, username, email);
         User user = new User();
         String password = generatePassword();
@@ -120,6 +121,7 @@ public class UserServiceImplementation implements UserServiceSpecification, User
         saveProfileImage(user, profileImage);
         LOGGER.info("New user password: " + password);
         return user;
+
     }
 
     @Override
@@ -224,14 +226,9 @@ public class UserServiceImplementation implements UserServiceSpecification, User
         }
     }
 
-    private void saveProfileImage(User user, MultipartFile profileImage) throws IOException, NotAnImageFileException {
+    private void saveProfileImage(User user, MultipartFile profileImage) throws IOException {
 
         if (profileImage != null) {
-            /*
-            if(!ArrayStoreException.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(profileImage.getContentType())) {
-                throw new NotAnImageFileException(profileImage.getOriginalFilename() + NOT_AN_IMAGE_FILE);
-            }
-             */
 
             Path userFolder = Paths.get(USER_FOLDER + user.getUsername()).toAbsolutePath().normalize();
             if(!Files.exists(userFolder)) {
@@ -243,6 +240,7 @@ public class UserServiceImplementation implements UserServiceSpecification, User
             user.setProfileImageUrl(setProfileImageUrl(user.getUsername()));
             userRepositoryBean.save(user);
             LOGGER.info(FILE_SAVED_IN_FILE_SYSTEM + profileImage.getOriginalFilename());
+
         }
 
     }

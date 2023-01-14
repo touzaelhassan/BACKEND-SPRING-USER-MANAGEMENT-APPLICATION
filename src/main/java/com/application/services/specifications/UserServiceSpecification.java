@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface UserServiceSpecification {
-
     User register(String firstname, String lastname, String username, String email) throws UserNotFoundException, EmailExistException, UsernameExistException;
     User addUser(String firstname, String lastname, String username, String email, String role, boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException;
     User updateUser(String currentUsername, String newFirstname, String newLastname, String newUsername, String newEmail, String role, boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException;
