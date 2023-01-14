@@ -16,6 +16,6 @@ public interface UserServiceSpecification {
     User findUserByUsername(String username);
     User findUserByEmail(String email);
     List<User> getUsers();
-    void deleteUser(String username) throws IOException;
+    void deleteUser(Long id) throws IOException;
     void updateUserRole(Long id, String role);
 }

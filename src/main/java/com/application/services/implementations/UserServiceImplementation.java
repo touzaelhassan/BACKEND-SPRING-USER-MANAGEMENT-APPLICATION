@@ -169,8 +169,8 @@ public class UserServiceImplementation implements UserServiceSpecification, User
     }
 
     @Override
-    public void deleteUser(String username) throws IOException {
-        User user = userRepositoryBean.findUserByUsername(username);
+    public void deleteUser(Long id) throws IOException {
+        User user = userRepositoryBean.findById(id).orElse(null);
         Path userFolder = Paths.get(USER_FOLDER + user.getUsername()).toAbsolutePath().normalize();
         FileUtils.deleteDirectory(new File(userFolder.toString()));
         userRepositoryBean.deleteById(user.getId());

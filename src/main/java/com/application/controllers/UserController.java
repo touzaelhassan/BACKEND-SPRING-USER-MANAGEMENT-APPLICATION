@@ -87,10 +87,10 @@ public class UserController extends ExceptionHandlingController {
         return response(OK, EMAIL_SENT + email);
     }
 
-    @DeleteMapping("/user/delete/{username}")
+    @DeleteMapping("/user/delete/{id}")
     @PreAuthorize("hasAnyAuthority('user:delete')")
-    public ResponseEntity<HttpResponse> deleteUser(@PathVariable("username") String username) throws IOException {
-        userServiceBean.deleteUser(username);
+    public ResponseEntity<HttpResponse> deleteUser(@PathVariable("id") Long id) throws IOException {
+        userServiceBean.deleteUser(id);
         return response(OK, USER_DELETED_SUCCESSFULLY);
     }
 
