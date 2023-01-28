@@ -1,2 +1,14 @@
-package com.application.controllers;public class TestController {
+package com.application.controllers;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api")
+public class TestController {
+
+    @GetMapping("/test")
+    public String getUser() { return "Hello From Test Controller"; }
+
 }
