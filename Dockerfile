@@ -1,5 +1,5 @@
 FROM openjdk:19
 WORKDIR /app
-COPY target/hotel-booking-application.jar app.jar
+COPY target/SPRING-USER-MANAGEMENT-APPLICATION-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8081
 CMD ["java", "-jar", "app.jar"]
