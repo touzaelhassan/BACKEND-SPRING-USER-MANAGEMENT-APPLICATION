@@ -34,7 +34,6 @@ public class Application {
     ){
 
         return args -> {
-
             User user = new User();
             user.setUserId("645389");
             user.setFirstname("El Hassan");
@@ -48,7 +47,6 @@ public class Application {
             user.setRole(Role.ROLE_SUPER_ADMIN.name());
             user.setAuthorities(getRoleEnumName(Role.ROLE_SUPER_ADMIN.name()).getAuthorities());
             userRepositoryBean.save(user);
-
         };
     }
 
