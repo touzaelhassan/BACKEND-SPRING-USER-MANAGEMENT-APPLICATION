@@ -1,5 +1,9 @@
 package com.application;
 
+import com.application.entities.User;
+import com.application.enums.Role;
+import com.application.repositories.UserRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +14,8 @@ import org.springframework.web.filter.CorsFilter;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
+
 import static com.application.constants.FileConstants.USER_FOLDER;
 
 
@@ -20,6 +26,33 @@ public class Application {
         SpringApplication.run(Application.class, args);
         new File(USER_FOLDER).mkdirs();
     }
+
+    @Bean
+    CommandLineRunner run(
+            UserRepository userRepositoryBean,
+            BCryptPasswordEncoder bCryptPasswordEncoder
+    ){
+
+        return args -> {
+
+            User user = new User();
+            user.setUserId("645389");
+            user.setFirstname("El Hassan");
+            user.setLastname("Touza");
+            user.setJoinDate(new Date());
+            user.setUsername("touzaelhassan");
+            user.setEmail("hassan@gmail.com");
+            user.setPassword(bCryptPasswordEncoder.encode("123456"));
+            user.setActive(true);
+            user.setNotLocked(true);
+            user.setRole(Role.ROLE_SUPER_ADMIN.name());
+            user.setAuthorities(getRoleEnumName(Role.ROLE_SUPER_ADMIN.name()).getAuthorities());
+            userRepositoryBean.save(user);
+
+        };
+    }
+
+    private Role getRoleEnumName(String role) { return Role.valueOf(role.toUpperCase()); }
 
     @Bean
     BCryptPasswordEncoder bCryptPasswordEncoder(){
